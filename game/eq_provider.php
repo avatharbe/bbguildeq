@@ -79,4 +79,13 @@ class eq_provider implements game_provider_interface
 	{
 		return array();
 	}
+
+	public function get_armor_types(): array
+	{
+		return array(
+			'CLOTH'   => 'Cloth',
+			'LEATHER' => 'Leather',
+			'PLATE'   => 'Plate',
+		);
+	}
 }
