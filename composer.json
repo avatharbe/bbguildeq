@@ -1,5 +1,5 @@
 {
-  "name": "avathar/bbguild_eq",
+  "name": "avathar/bbguild-eq",
   "type": "phpbb-extension",
   "description": "EverQuest game plugin for bbGuild. Provides EQ classes, races, and factions.",
   "homepage": "https://github.com/avandenberghe/bbguild",
