@@ -1,6 +1,8 @@
 # bbGuild - EverQuest
 [![Tests](https://github.com/avatharbe/bbguild_eq/actions/workflows/tests.yml/badge.svg)](https://github.com/avatharbe/bbguild_eq/actions/workflows/tests.yml)
 
+**Version:** [![Latest Stable Version](https://img.shields.io/github/v/release/avatharbe/bbguild_eq)](https://github.com/avatharbe/bbguild_eq/releases)   
+  
 Game plugin that adds EverQuest support to [bbGuild](https://github.com/avandenberghe/bbguild).
 
 ## Features
