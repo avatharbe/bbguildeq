@@ -132,4 +132,45 @@ class eq_installer extends abstract_game_install
 		$sql_ary[] = array('game_id' => $this->game_id, 'attribute_id' => 16, 'language' => 'en', 'attribute' => 'race', 'name' => 'Drakkin',   'name_short' => 'Drakkin');
 		$this->db->sql_multi_insert($this->table('bb_language_table'), $sql_ary);
 	}
+
+	/**
+	 * Installs EQ specializations (issue #6).
+	 *
+	 * Classic EverQuest has no named subclass/specialization layer above
+	 * its 16 classes — see eq_provider::spec_catalog()'s docblock for why
+	 * this is deliberately empty rather than an oversight. Mirrors
+	 * gw2_installer::install_specs()'s structure for consistency even
+	 * though there is nothing to insert here.
+	 *
+	 * Skipped if bb_specializations_table isn't wired in (older core
+	 * installs that haven't run migration v200b4 yet).
+	 */
+	protected function install_specs(): void
+	{
+		if (!isset($this->table_names['bb_specializations_table']))
+		{
+			return;
+		}
+
+		$rows = [];
+		foreach (eq_provider::spec_catalog() as $class_id => $specs)
+		{
+			foreach ($specs as $spec)
+			{
+				$rows[] = [
+					'game_id'    => $this->game_id,
+					'class_id'   => (int) $class_id,
+					'role_id'    => (int) $spec['role_id'],
+					'spec_name'  => (string) $spec['spec_name'],
+					'spec_icon'  => (string) $spec['spec_icon'],
+					'spec_order' => (int) $spec['spec_order'],
+				];
+			}
+		}
+		if (!$rows)
+		{
+			return;
+		}
+		$this->db->sql_multi_insert($this->table('bb_specializations_table'), $rows);
+	}
 }

@@ -75,6 +75,29 @@ class eq_installer_test extends TestCase
 		$method->invoke($this->installer);
 	}
 
+	/**
+	 * Set (key => value) or remove (value === null) a single entry in the
+	 * installer's table_names map, on top of whatever setUp() put there.
+	 */
+	private function set_table_name(string $key, ?string $value): void
+	{
+		$ref = new \ReflectionClass($this->installer);
+		$tn = $ref->getProperty('table_names');
+		$tn->setAccessible(true);
+		$current = $tn->getValue($this->installer);
+
+		if ($value === null)
+		{
+			unset($current[$key]);
+		}
+		else
+		{
+			$current[$key] = $value;
+		}
+
+		$tn->setValue($this->installer, $current);
+	}
+
 	// ── Factions ───────────────────────────────────────────
 
 	public function test_install_factions_count(): void
@@ -242,5 +265,33 @@ class eq_installer_test extends TestCase
 			(new \ReflectionClass(eq_installer::class))->hasMethod('install_roles')
 				&& (new \ReflectionMethod(eq_installer::class, 'install_roles'))->getDeclaringClass()->getName() === eq_installer::class
 		);
+	}
+
+	// ── Specializations (install_specs) ─────────────────────
+	//
+	// Classic EverQuest (this plugin's target — see the races/classes
+	// above: Vah Shir, Iksar, Froglok, Drakkin, Beastlord, Berserker) has
+	// no named subclass/specialization layer above its 16 classes — each
+	// class_id already is the terminal build. eq_provider::spec_catalog()
+	// is therefore deliberately empty (see its docblock), and
+	// install_specs() must confirm-empty rather than insert anything,
+	// even when the specializations table is wired in.
+
+	public function test_install_specs_is_confirmed_empty_when_table_wired(): void
+	{
+		$this->set_table_name('bb_specializations_table', 'phpbb_bb_specializations');
+
+		$this->invoke_protected('install_specs');
+
+		$this->assertCount(0, $this->inserted, 'EQ has no spec layer to seed — install_specs() must not insert any rows');
+	}
+
+	public function test_install_specs_skips_when_table_not_wired(): void
+	{
+		$this->set_table_name('bb_specializations_table', null);
+
+		$this->invoke_protected('install_specs');
+
+		$this->assertCount(0, $this->inserted, 'install_specs() must no-op when bb_specializations_table is not in table_names');
 	}
 }
