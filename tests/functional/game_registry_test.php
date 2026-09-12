@@ -11,13 +11,18 @@
  * After enabling, requests bbguild core's ACP "edit game" page for
  * game_id=eq. That page (controller/admin_games.php::showgame()) resolves
  * the game's provider via the tagged bbguild.game_provider service
- * (avathar.bbguild.game_registry) and, when a provider is found, points
- * the game image path at the provider's own get_images_path() instead of
- * core's generic fallback — so a GAMEPATH containing
- * "bbguildeq/images/eq.png" is only possible if eq_provider is actually
- * registered and reachable. It also renders an "Enable armory" checkbox
- * only when the provider's has_api() is true; asserting its absence here
- * locks down eq_provider::has_api() === false (unlike bbguildwow).
+ * (avathar.bbguild.game_registry) and, when a provider is found, renders
+ * role/class images through the provider's own get_images_path() instead
+ * of core's generic fallback — so a role or class image path containing
+ * "bbguildeq/images/" is only possible if eq_provider is actually
+ * registered and reachable. (The page's top-level per-game GAMEPATH icon
+ * — {game_id}.png — is not asserted here: no plugin in this family
+ * actually ships that file, so the template's <!-- IF S_GAMEIMAGE_EXISTS -->
+ * guard never renders it regardless of provider wiring; that's a separate,
+ * pre-existing asset gap, not something this test can use as a signal.)
+ * It also renders an "Enable armory" checkbox only when the provider's
+ * has_api() is true; asserting its absence here locks down
+ * eq_provider::has_api() === false (unlike bbguildwow).
  *
  * Catches: bbguild.game_provider tag missing in services.yml, broken
  * provider class, has_api() drifting to true by accident.
@@ -49,9 +54,9 @@ class avathar_bbguildeq_game_registry_test extends phpbb_functional_test_case
 		$content = self::$client->getResponse()->getContent();
 
 		$this->assertStringContainsString(
-			'bbguildeq/images/eq.png',
+			'bbguildeq/images/role_icons/',
 			$content,
-			'edit-game page should resolve the game image through eq_provider::get_images_path(), proving the provider is registered'
+			'edit-game page should resolve role icons through eq_provider::get_images_path(), proving the provider is registered'
 		);
 
 		$this->assertStringNotContainsString(

@@ -25,8 +25,12 @@
  */
 class avathar_bbguildeq_guild_view_renders_test extends phpbb_functional_test_case
 {
-	/** Arbitrary guild id unlikely to collide with core's seeded guild_id=0/1 */
-	const TEST_GUILD_ID = 42424;
+	/**
+	 * Guild id unlikely to collide with core's seeded guild_id=0/1.
+	 * Must stay within bb_guild.id's USINT range (signed SMALLINT on
+	 * Postgres, max 32767) — 42424 overflowed it and failed CI.
+	 */
+	const TEST_GUILD_ID = 24242;
 
 	static protected function setup_extensions()
 	{
