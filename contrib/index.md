@@ -1,13 +1,5 @@
 # bbGuild - EverQuest
 
-**Current version:** 2.0.0-rc2 (release candidate)
-
-[![Tests](https://github.com/avatharbe/bbguildeq/actions/workflows/tests.yml/badge.svg)](https://github.com/avatharbe/bbguildeq/actions/workflows/tests.yml)
-
-**Version:** [![Latest Stable Version](https://img.shields.io/github/v/release/avatharbe/bbguildeq)](https://github.com/avatharbe/bbguildeq/releases)
-
-**Documentation:** [avatharbe.github.io/bbguildeq](https://avatharbe.github.io/bbguildeq/)
-
 EverQuest is where guild-management tools like this one started in the first place — bbGuild itself was originally forked from EQDKP back in 2008, before it ever supported any other game, so this plugin is closer to bbGuild's roots than any other in the family. bbguildeq brings all 16 classes and 16 races into your guild's roster, with the Good/Evil/Neutral alignment system that's shaped EQ guild politics since 1999, and boss/zone links straight to EQ Allakhazam so raid planning doesn't mean tabbing out to another site. If your guild has been running progression or classic servers for years, this gives that roster a real home on the forum you already have.
 
 ## Features
