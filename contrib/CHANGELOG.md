@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.1.0 22/09/2026
+  - [NEW] Added a full EPV/unit/functional/smoke/integration test suite (#5)
+  - [NEW] Added `specialization_provider_interface` (no-op: EverQuest classes are already terminal, no sub-spec layer to seed) (#6)
+  - [FIX] Various CI/test fixture fixes surfaced while adding the new suite (smallint overflow, wrong image-path assertion, missing `bb_portal_tabs` seed row in the guild-view functional fixture)
+  - [FIX] `cleanup.sql`: stale `bbguild_eq` naming and a wrong column name
+  - [FIX] `depends_on()` pointed at a bbguild core migration removed by core's migration squash
+  - [FIX] Unit test broken by the language-service migration
+  - [FIX] `composer.json`: wrong homepage URL, missing `require-dev`
+  - [CHG] Deprecated `sql_nextid()`/`add_lang_ext()` calls replaced with `sql_last_inserted_id()`/the language service
+  - [CHG] Core version pairing bumped to `>=2.1.0`
+  - [NEW] Added community health files (CoC, security policy, contributing guide, templates)
+  - [NEW] Added a docs site (MkDocs + GitHub Pages)
+
 ## 2.0.0-rc2 25/07/2026
   - [DOCS] Verified game data against current EverQuest — all 16 classes and 16 races present and current. Corrected the README class/race counts from 17 to 16 (the extra count was the Unknown placeholder). (#2)
 
